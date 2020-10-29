@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script  src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<body>
+    <div id="theater">
+        <video id="video" src="video/1.mp4" autoplay muted></video>
+        <canvas id="can"></canvas>
+      </div>
+</body>
+</html>
+<script>
+    $(function() {
+  var can = document.getElementById('can');
+  var ctx = can.getContext('2d');
+  var video = document.getElementById('video');
+
+  video.addEventListener('play', function() {
+    var $this = this; //cache
+    (function loop() {
+      if (!$this.paused && !$this.ended) {
+        ctx.drawImage($this, 0, 0);
+        setTimeout(loop, 1000 / 60); // drawing at 30fps
+      }
+    })();
+  }, 0);
+});
+
+</script>
